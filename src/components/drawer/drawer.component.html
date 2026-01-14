@@ -1,0 +1,39 @@
+<div class="p-4 space-y-6">
+  <header class="flex items-center space-x-4">
+    <button (click)="goBack()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-600 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    <div>
+      <h1 class="text-2xl font-bold text-primary-darker dark:text-primary-light">Obter Dados para Depósito</h1>
+      <p class="text-slate-500 dark:text-slate-400">Contacte o nosso suporte para obter um IBAN válido.</p>
+    </div>
+  </header>
+
+  <div class="space-y-4">
+    <!-- Gmail -->
+    <a href="mailto:tradelude@gmail.com" target="_blank" class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-shadow">
+      <svg class="w-10 h-10 text-red-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      <div class="ml-4 flex-grow">
+        <p class="font-bold text-lg text-slate-800 dark:text-slate-100">Contactar via Email</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400">Para questões formais e envio de documentos.</p>
+      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+    </a>
+    
+    <!-- WhatsApp -->
+    <a href="https://wa.me/244926558691" target="_blank" class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-shadow">
+      <svg class="w-10 h-10 text-green-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.38 1.25 4.85L2 22l5.34-1.38c1.41.74 3 .93 4.64.93 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zM12.04 20.12c-1.48 0-2.91-.4-4.19-1.15l-.3-.18-3.12.81.83-3.04-.2-.32a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.54-3.7 8.24-8.24 8.24zm4.52-6.13c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.15.17-.29.19-.54.06-.25-.12-1.06-.39-2.02-1.25-.75-.67-1.25-1.5-1.4-1.75-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.55-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86 1-.86 2.22s.88 2.58 1 2.75c.12.17 1.74 2.65 4.22 3.72.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.06 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.12-.22-.19-.47-.31z"/></svg>
+      <div class="ml-4 flex-grow">
+        <p class="font-bold text-lg text-slate-800 dark:text-slate-100">Contactar via WhatsApp</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400">Para suporte rápido e conveniente.</p>
+      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+    </a>
+  </div>
+  
+  <div class="p-4 bg-blue-100 dark:bg-blue-900 border-l-4 border-primary-dark rounded-r-lg">
+    <p class="text-sm text-primary-darker dark:text-blue-200">Após a transferência, volte à página de depósito para <span class="font-bold">enviar o comprovativo</span>.</p>
+  </div>
+</div>

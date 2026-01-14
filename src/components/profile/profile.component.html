@@ -1,0 +1,85 @@
+<div class="p-4 space-y-6">
+  <header class="flex items-center space-x-4">
+    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-dark to-primary-light flex items-center justify-center text-white text-2xl font-bold">
+      {{ currentUser()?.phone?.substring(0, 1) || 'U' }}
+    </div>
+    <div>
+      <h1 class="text-xl font-bold text-slate-800 dark:text-slate-100">{{ currentUser()?.fullName || 'Utilizador' }}</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">{{ currentUser()?.phone }}</p>
+    </div>
+  </header>
+  
+  <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-4 space-y-2">
+    <!-- Vincular Conta -->
+    <div>
+      <button (click)="toggleSection('vincular')" class="w-full flex justify-between items-center text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+        <span class="font-semibold text-slate-700 dark:text-slate-200">Vincular Conta Bancária</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-transform" [class.rotate-180]="activeSection() === 'vincular'" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+      </button>
+      @if (activeSection() === 'vincular') {
+        <div class="mt-2 p-4 border-t border-slate-200 dark:border-slate-700 space-y-4">
+          <input type="text" [(ngModel)]="fullName" placeholder="Escreva nome Completo aqui" class="w-full p-2 bg-slate-100 dark:bg-slate-700 rounded-md">
+          <input type="text" [(ngModel)]="iban" placeholder="Escreva IBAN aqui" class="w-full p-2 bg-slate-100 dark:bg-slate-700 rounded-md">
+          <input type="password" [(ngModel)]="withdrawalPin" placeholder="Escreva PIN de saque aqui" class="w-full p-2 bg-slate-100 dark:bg-slate-700 rounded-md">
+          <div class="flex justify-end items-center gap-4 -mt-2">
+            <button type="button" (click)="forgotWithdrawalPin()" class="text-xs font-medium text-primary-dark hover:underline dark:text-primary-light focus:outline-none">
+                Esqueceu o PIN de saque?
+            </button>
+          </div>
+           @if(showForgotPinMessage()) {
+            <p class="text-xs text-blue-500 text-center bg-blue-100 dark:bg-blue-900 dark:text-blue-200 p-2 rounded-lg">
+              Para redefinir seu PIN, por favor, contacte o suporte.
+            </p>
+          }
+          <p class="text-xs text-yellow-600 dark:text-yellow-400">NB: O nome completo não pode ser diferente com o nome do IBAN vinculado.</p>
+          <button (click)="saveAccountInfo()" class="w-full py-2 bg-primary-dark text-white rounded-lg hover:bg-primary-darker">Salvar</button>
+          @if (infoSaved()) { <p class="text-sm text-center text-green-500">Informação salva com sucesso!</p> }
+        </div>
+      }
+    </div>
+
+    <!-- Saque -->
+    <div>
+      <button (click)="toggleSection('sacar')" class="w-full flex justify-between items-center text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+        <span class="font-semibold text-slate-700 dark:text-slate-200">Realizar Saque</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transition-transform" [class.rotate-180]="activeSection() === 'sacar'" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+      </button>
+       @if (activeSection() === 'sacar') {
+        <div class="mt-2 p-4 border-t border-slate-200 dark:border-slate-700 space-y-4">
+          <input type="number" [(ngModel)]="withdrawAmount" placeholder="Valor do saque (min 15 Kz)" class="w-full p-2 bg-slate-100 dark:bg-slate-700 rounded-md">
+          <input type="password" [(ngModel)]="withdrawPinConfirm" placeholder="Confirmar PIN de retirada" class="w-full p-2 bg-slate-100 dark:bg-slate-700 rounded-md">
+          <div class="text-xs text-slate-500 dark:text-slate-400 space-y-1">
+             <p>Taxa de saque: 25%.</p>
+             <p>Tempo de processamento: 2 min - 72 horas.</p>
+             <p>NB: Só é permitido 2 saques por mês.</p>
+          </div>
+          <button (click)="requestWithdrawal()" class="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Confirmar Retirada</button>
+           @if (withdrawMessage(); as msg) { 
+            <p class="text-sm text-center p-2 rounded-md" 
+               [class]="msg.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
+              {{ msg.text }}
+            </p> 
+           }
+        </div>
+      }
+    </div>
+    
+    <!-- Obter IBAN para Depósito -->
+    <a routerLink="/app/drawer" class="w-full flex justify-between items-center text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+      <span class="font-semibold text-slate-700 dark:text-slate-200">Obter IBAN para Depósito</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+    </a>
+  </div>
+  
+  <div class="pt-4">
+    <button (click)="logout()" class="w-full py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-md transition-transform transform hover:scale-105">
+      Sair
+    </button>
+  </div>
+  
+  <footer class="text-center text-xs text-slate-400 dark:text-slate-500 pt-4 space-y-2">
+      <p>Licença Angolana: Validade por tempo indeterminado.</p>
+      <p>Localização: Estados Unidos</p>
+      <p>Patrocinado por: ONNS, OMS, UNITEL, AFRICEL, NVIDIA, ADS internacional</p>
+  </footer>
+</div>

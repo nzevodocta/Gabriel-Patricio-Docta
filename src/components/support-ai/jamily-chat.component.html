@@ -1,0 +1,50 @@
+
+<!-- Chat History -->
+<div class="flex-grow bg-white dark:bg-slate-800 rounded-xl shadow-lg p-4 space-y-4 overflow-y-auto">
+  @for (message of history(); track $index) {
+    <div class="flex" [class.justify-end]="message.sender === 'user'" [class.justify-start]="message.sender === 'ai'">
+      <div class="max-w-xs md:max-w-md lg:max-w-lg px-4 py-2 rounded-2xl" 
+           [class.bg-primary-dark]="message.sender === 'user'"
+           [class.text-white]="message.sender === 'user'"
+           [class.bg-slate-200]="message.sender === 'ai'"
+           [class.dark:bg-slate-700]="message.sender === 'ai'"
+           [class.text-slate-800]="message.sender === 'ai'"
+           [class.dark:text-slate-100]="message.sender === 'ai'">
+        <p class="text-sm whitespace-pre-wrap">{{ message.text }}</p>
+      </div>
+    </div>
+  }
+  @if (isLoading()) {
+    <div class="flex justify-start">
+      <div class="max-w-xs md:max-w-md lg:max-w-lg px-4 py-2 rounded-2xl bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100">
+        <div class="flex items-center space-x-2">
+          <div class="w-2 h-2 bg-slate-500 rounded-full animate-pulse"></div>
+          <div class="w-2 h-2 bg-slate-500 rounded-full animate-pulse [animation-delay:0.2s]"></div>
+          <div class="w-2 h-2 bg-slate-500 rounded-full animate-pulse [animation-delay:0.4s]"></div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Message Input -->
+<div class="flex-shrink-0">
+  <form (ngSubmit)="submitMessage()" class="flex items-center gap-2 p-2 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
+    <input type="text"
+           [(ngModel)]="userInput"
+           name="userInput"
+           placeholder="Escreva a sua pergunta..."
+           class="flex-grow w-full px-4 py-2 bg-slate-100 dark:bg-slate-700 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-dark"
+           [disabled]="isLoading()">
+    <button type="submit"
+            class="p-3 bg-primary-dark hover:bg-primary-darker text-white rounded-lg shadow-md transition-transform transform hover:scale-105 disabled:bg-slate-400 disabled:cursor-not-allowed"
+            [disabled]="isLoading() || !userInput()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      </svg>
+    </button>
+  </form>
+  @if (error()) {
+    <p class="text-xs text-red-500 text-center mt-2">{{ error() }}</p>
+  }
+</div>

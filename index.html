@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Trade Lude 80</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              light: '#60a5fa', // blue-400
+              DEFAULT: '#3b82f6', // blue-500
+              dark: '#2563eb', // blue-600
+              darker: '#1e40af' // blue-800
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style>
+  .logo-animate {
+    animation: glow 3s ease-in-out infinite;
+  }
+  
+  .logo-animate.trade {
+    --glow-color: #fff;
+  }
+
+  .logo-animate.lude {
+    --glow-color: #22c55e; /* green-500 */
+    animation-delay: 0.2s;
+  }
+
+  .logo-animate.eighty {
+    --glow-color: #ec4899; /* pink-500 */
+    animation-delay: 0.4s;
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      text-shadow: none;
+    }
+    50% {
+      text-shadow: 0 0 7px var(--glow-color), 
+                   0 0 10px var(--glow-color), 
+                   0 0 21px var(--glow-color), 
+                   0 0 42px var(--glow-color);
+    }
+  }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "rxjs": "https://esm.sh/rxjs@^7.8.2?conditions=es2015",
+    "rxjs/operators": "https://esm.sh/rxjs@^7.8.2/operators?conditions=es2015",
+    "rxjs/ajax": "https://esm.sh/rxjs@^7.8.2/ajax?conditions=es2015",
+    "rxjs/webSocket": "https://esm.sh/rxjs@^7.8.2/webSocket?conditions=es2015",
+    "rxjs/testing": "https://esm.sh/rxjs@^7.8.2/testing?conditions=es2015",
+    "rxjs/fetch": "https://esm.sh/rxjs@^7.8.2/fetch?conditions=es2015",
+    "@angular/router": "https://esm.sh/@angular/router@^21.0.8?external=rxjs",
+    "@angular/compiler": "https://esm.sh/@angular/compiler@^21.0.8?external=rxjs",
+    "@angular/platform-browser": "https://esm.sh/@angular/platform-browser@^21.0.8?external=rxjs",
+    "@angular/common": "https://esm.sh/@angular/common@^21.0.8?external=rxjs",
+    "@angular/core": "https://esm.sh/@angular/core@^21.0.8?external=rxjs",
+    "@angular/forms": "https://esm.sh/@angular/forms@^21.0.8?external=rxjs",
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0?external=rxjs"
+  }
+}
+</script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900">
+  <app-root></app-root>
+</body>
+</html>

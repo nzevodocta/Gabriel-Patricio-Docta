@@ -1,0 +1,15 @@
+
+<div class="flex flex-col h-full p-4 space-y-4">
+  <header class="text-center flex-shrink-0">
+    <h1 class="text-2xl font-bold text-primary-darker dark:text-primary-light">Ajuda e Suporte AI</h1>
+    <p class="text-slate-500 dark:text-slate-400">Converse com a nossa assistente <span class="font-bold">JAMILY</span></p>
+  </header>
+
+  <app-jamily-chat
+    class="flex flex-col flex-grow min-h-0 space-y-4"
+    [history]="chatHistory()"
+    [isLoading]="isLoading()"
+    [error]="error()"
+    (messageSent)="sendMessage($event)">
+  </app-jamily-chat>
+</div>

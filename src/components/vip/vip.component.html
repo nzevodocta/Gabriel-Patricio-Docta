@@ -1,0 +1,80 @@
+
+<div class="p-4 space-y-6">
+  <header>
+    <h1 class="text-2xl font-bold text-primary-darker dark:text-primary-light">Planos VIP</h1>
+    <p class="text-slate-500 dark:text-slate-400">Escolha um plano para ativar e aumentar sua renda.</p>
+  </header>
+
+  @if (activationStatus(); as status) {
+    <div class="p-4 mb-4 text-sm rounded-lg"
+         [class]="status.type === 'success' ? 'bg-green-100 dark:bg-green-200 text-green-800 dark:text-green-900' : 'bg-red-100 dark:bg-red-200 text-red-800 dark:text-red-900'"
+         role="alert">
+      <span class="font-medium">{{ status.message }}</span>
+    </div>
+  }
+
+  <!-- VIP Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    @for (plan of plans; track plan.name; let i = $index) {
+      <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-4 flex flex-col justify-between transition-opacity"
+           [class.border-2]="currentUserPlanIndex() === i"
+           [class.border-primary-dark]="currentUserPlanIndex() === i"
+           [class.opacity-60]="isPlanDisabled(i)">
+        <div>
+          <h2 class="text-xl font-bold text-primary-dark dark:text-primary-light">{{ plan.name }}</h2>
+          <p class="text-slate-500 dark:text-slate-400">Ativa {{ plan.level }}</p>
+          <p class="text-3xl font-extrabold text-slate-800 dark:text-white mt-2">{{ plan.cost | number:'1.2-2' }} Kz</p>
+          <p class="text-sm text-green-600 dark:text-green-400 font-semibold mt-1">Renda Diária: {{ plan.dailyIncome | number:'1.2-2' }} Kz</p>
+          @if (plan.duration) {
+            <p class="text-xs text-slate-500 dark:text-slate-400">Duração: {{plan.duration}} dias</p>
+          }
+        </div>
+        <button (click)="activate(plan)"
+                [disabled]="isPlanDisabled(i)"
+                class="w-full mt-4 py-2 px-4 bg-primary-dark hover:bg-primary-darker text-white font-semibold rounded-lg shadow-md transition-transform transform hover:scale-105 disabled:bg-slate-400 disabled:dark:bg-slate-600 disabled:cursor-not-allowed">
+          {{ currentUserPlanIndex() === i ? 'Plano Atual' : 'Ativar VIP' }}
+        </button>
+      </div>
+    }
+  </div>
+
+  <!-- Income Tables -->
+  <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-4">
+    <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Tabela de Preços</h2>
+    <div class="border-b border-slate-200 dark:border-slate-700">
+      <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+        <button (click)="activeTab = 'monthly'"
+                [class]="activeTab === 'monthly' ? 'border-primary-dark text-primary-dark dark:border-primary-light dark:text-primary-light' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-slate-400 dark:hover:text-slate-300'"
+                class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
+          Mensal
+        </button>
+        <button (click)="activeTab = 'annual'"
+                [class]="activeTab === 'annual' ? 'border-primary-dark text-primary-dark dark:border-primary-light dark:text-primary-light' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-slate-400 dark:hover:text-slate-300'"
+                class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
+          Anual
+        </button>
+      </nav>
+    </div>
+
+    <div class="mt-4 overflow-x-auto">
+      <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+        <thead class="bg-slate-50 dark:bg-slate-700">
+          <tr>
+            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Plano</th>
+            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">Renda {{ activeTab === 'monthly' ? 'Mensal' : 'Anual' }}</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+          @for (plan of plans; track plan.name) {
+            <tr>
+              <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">{{ plan.name }}</td>
+              <td class="px-4 py-3 whitespace-nowrap text-sm text-slate-500 dark:text-slate-300">
+                {{ (activeTab === 'monthly' ? getMonthlyIncome(plan.dailyIncome) : getAnnualIncome(plan.dailyIncome)) | number:'1.2-2' }} Kz
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

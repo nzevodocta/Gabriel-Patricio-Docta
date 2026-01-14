@@ -1,0 +1,28 @@
+
+<div class="flex flex-col h-screen bg-slate-100 dark:bg-slate-900">
+  <!-- Main content area -->
+  <main class="flex-grow overflow-y-auto pb-20">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 shadow-lg">
+    <div class="flex justify-around max-w-lg mx-auto">
+      @for (item of navItems; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="text-primary-dark" class="flex-1 p-2 text-center text-slate-600 dark:text-slate-300 hover:text-primary-dark dark:hover:text-primary-light transition-colors">
+          <div class="flex flex-col items-center">
+             @switch (item.icon) {
+                @case ('home') { <app-home-icon [isActive]="isRouteActive(item.path)"></app-home-icon> }
+                @case ('tasks') { <app-tasks-icon [isActive]="isRouteActive(item.path)"></app-tasks-icon> }
+                @case ('vip') { <app-vip-icon [isActive]="isRouteActive(item.path)"></app-vip-icon> }
+                @case ('support') { <app-support-icon [isActive]="isRouteActive(item.path)"></app-support-icon> }
+                @case ('deposit') { <app-deposit-icon [isActive]="isRouteActive(item.path)"></app-deposit-icon> }
+                @case ('profile') { <app-profile-icon [isActive]="isRouteActive(item.path)"></app-profile-icon> }
+            }
+            <span class="text-xs mt-1">{{ item.label }}</span>
+          </div>
+        </a>
+      }
+    </div>
+  </nav>
+</div>

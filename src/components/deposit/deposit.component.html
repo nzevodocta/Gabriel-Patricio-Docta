@@ -1,0 +1,58 @@
+<div class="p-4 space-y-6">
+  <header>
+    <h1 class="text-2xl font-bold text-primary-darker dark:text-primary-light">Depósito</h1>
+    <p class="text-slate-500 dark:text-slate-400">Envie o comprovativo após a transferência.</p>
+  </header>
+
+  <div class="p-4 bg-blue-100 dark:bg-blue-900 border-l-4 border-primary-dark rounded-r-lg">
+    <p class="text-sm text-primary-darker dark:text-blue-200 font-semibold">Bônus de 5% para cada depósito!</p>
+  </div>
+
+  <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-4">
+      <h2 class="font-bold text-slate-800 dark:text-slate-100">Contas para Depósito</h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Para realizar um depósito, clique abaixo para ver as opções de contacto e obter os dados da conta.</p>
+      <a routerLink="/app/drawer" class="mt-4 inline-block w-full text-center py-2 px-4 bg-primary-dark hover:bg-primary-darker text-white font-semibold rounded-lg shadow-md transition-transform transform hover:scale-105">
+        Ver Opções de Contacto
+      </a>
+    </div>
+
+  <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 space-y-4">
+    <h2 class="text-lg font-bold text-slate-800 dark:text-slate-100">Enviar Comprovativo</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400">O valor só refletirá na conta após o envio de um comprovativo válido.</p>
+    
+    <div>
+      <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 dark:border-slate-600 border-dashed rounded-md">
+        <div class="space-y-1 text-center">
+          <svg class="mx-auto h-12 w-12 text-slate-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <div class="flex text-sm text-slate-600 dark:text-slate-400">
+            <label for="file-upload" class="relative cursor-pointer bg-white dark:bg-slate-800 rounded-md font-medium text-primary-dark dark:text-primary-light hover:text-primary-darker focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-dark">
+              <span>Carregue um ficheiro</span>
+              <input id="file-upload" name="file-upload" type="file" class="sr-only" (change)="onFileSelected($event)">
+            </label>
+            <p class="pl-1">ou arraste e solte</p>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-500">PNG, JPG, GIF até 10MB</p>
+        </div>
+      </div>
+      @if (fileName()) {
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 text-center">Ficheiro selecionado: {{ fileName() }}</p>
+      }
+    </div>
+
+    <div class="bg-yellow-100 dark:bg-yellow-900 border-l-4 border-yellow-500 text-yellow-800 dark:text-yellow-200 p-4 rounded-r-lg" role="alert">
+      <p class="font-bold">Atenção!</p>
+      <p class="text-sm">O comprovativo deve ser enviado em no máximo 33 minutos, caso contrário, o depósito será nulo.</p>
+    </div>
+     <button type="button" (click)="submitReceipt()" class="w-full py-3 px-4 bg-primary-dark hover:bg-primary-darker text-white font-semibold rounded-lg shadow-md transition-transform transform hover:scale-105">
+      Enviar
+    </button>
+    @if (uploadStatus() === 'success') {
+      <p class="text-green-500 text-sm mt-2 text-center">Comprovativo enviado com sucesso! O saldo será atualizado em breve.</p>
+    }
+    @if (uploadStatus() === 'error') {
+      <p class="text-red-500 text-sm mt-2 text-center">Por favor, selecione um ficheiro primeiro.</p>
+    }
+  </div>
+</div>

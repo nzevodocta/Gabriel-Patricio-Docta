@@ -1,0 +1,5 @@
+{
+  "name": "Trade Lude 80",
+  "description": "An investment platform applet with user registration, tasks, deposits, withdrawals, and VIP levels, built with Angular and styled with Tailwind CSS.",
+  "requestFramePermissions": []
+}
